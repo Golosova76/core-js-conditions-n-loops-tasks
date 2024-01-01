@@ -168,8 +168,60 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    const numberString = numberStr[i];
+    switch (numberString) {
+      case '0':
+        result += 'zero ';
+        break;
+      case '1':
+        result += 'one ';
+        break;
+      case '2':
+        result += 'two ';
+        break;
+      case '3':
+        result += 'three ';
+        break;
+      case '4':
+        result += 'four ';
+        break;
+      case '5':
+        result += 'five ';
+        break;
+      case '6':
+        result += 'six ';
+        break;
+      case '7':
+        result += 'seven ';
+        break;
+      case '8':
+        result += 'eight ';
+        break;
+      case '9':
+        result += 'nine ';
+        break;
+      case '.':
+      case ',':
+        result += 'point ';
+        break;
+      case '-':
+        result += 'minus ';
+        break;
+      default:
+        break;
+    }
+  }
+  if (result[result.length - 1] === ' ') {
+    let newResult = '';
+    for (let i = 0; i < result.length - 1; i += 1) {
+      newResult += result[i];
+    }
+    result = newResult;
+  }
+  return result;
 }
 
 /**
@@ -184,8 +236,14 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  const reverseStr = str.length;
+  for (let i = 0; i < reverseStr / 2; i += 1) {
+    if (str[i] !== str[reverseStr - i - 1]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -202,8 +260,15 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let count = 0;
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      count = i;
+      return count;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -221,8 +286,17 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let currentNum = num;
+  let numberX = 0;
+  while (currentNum > 0) {
+    numberX = currentNum % 10;
+    if (numberX === digit) {
+      return true;
+    }
+    currentNum = Math.floor(currentNum / 10);
+  }
+  return false;
 }
 
 /**
@@ -238,8 +312,24 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  if (arr.length === 0) {
+    return -1;
+  }
+  for (let index = 0; index < arr.length; index += 1) {
+    let countLeft = 0;
+    let countRight = 0;
+    for (let i = 0; i < index; i += 1) {
+      countLeft += arr[i];
+    }
+    for (let i = index + 1; i < arr.length; i += 1) {
+      countRight += arr[i];
+    }
+    if (countLeft === countRight) {
+      return index;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -263,8 +353,42 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+    for (let j = 0; j < size; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+  let currentNumber = 1;
+  let startColumn = 0;
+  let endColumn = size - 1;
+  let startRow = 0;
+  let endRow = size - 1;
+  while (startColumn <= endColumn && startRow <= endRow) {
+    for (let i = startColumn; i <= endColumn; i += 1) {
+      matrix[startRow][i] = currentNumber;
+      currentNumber += 1;
+    }
+    startRow += 1;
+    for (let i = startRow; i <= endRow; i += 1) {
+      matrix[i][endColumn] = currentNumber;
+      currentNumber += 1;
+    }
+    endColumn -= 1;
+    for (let i = endColumn; i >= startColumn; i -= 1) {
+      matrix[endRow][i] = currentNumber;
+      currentNumber += 1;
+    }
+    endRow -= 1;
+    for (let i = endRow; i >= startRow; i -= 1) {
+      matrix[i][startColumn] = currentNumber;
+      currentNumber += 1;
+    }
+    startColumn += 1;
+  }
+  return matrix;
 }
 
 /**
